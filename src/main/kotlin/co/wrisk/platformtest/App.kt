@@ -1,6 +1,5 @@
 package co.wrisk.platformtest
 
-import co.wrisk.platformtest.builder.sectionContract
 import java.math.BigDecimal
 
 fun main(args: Array<String>) {
@@ -21,6 +20,8 @@ fun main(args: Array<String>) {
         }
 
     }
+
+
 
     println(sectionContract)
 }

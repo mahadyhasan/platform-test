@@ -1,4 +1,4 @@
-package co.wrisk.platformtest.builder
+package co.wrisk.platformtest
 
 import co.wrisk.platformservice.contracts.BundleContract
 import co.wrisk.platformservice.contracts.NamedItemContract
