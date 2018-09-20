@@ -1,35 +1,32 @@
 package co.wrisk.platformtest
 
+import co.wrisk.platformtest.handler.CalculateQuoteHandler
 import co.wrisk.platformtest.model.NamedItem
+import co.wrisk.platformtest.model.QuoteRequest
 import co.wrisk.platformtest.model.SectionType
+import co.wrisk.platformtest.response.Quote
 import java.math.BigDecimal
 
-fun calculateQuote(wriskScore: Int, bundleSelected: List<SectionType>, namedItemSelected: List<NamedItem>): Quote {
+class QuoteGenerator {
 
+    val calculateQuoteHandler = CalculateQuoteHandler()
 
-    for (bundle in bundleSelected) {
-        for (excess in bundle.excessOptions) {
-            println(excess.multiply(BigDecimal.TEN))
-        }
+    fun calculateQuote(quoteRequest: QuoteRequest): Quote {
+          return calculateQuoteHandler.handle(quoteRequest)
     }
 
-
-    return Quote()
-}
-
-class Quote {
 
 }
 
 fun main(args: Array<String>) {
 
-    val bundleSelected = listOf(SectionType.GENERAL)
-
-    val namedItemSelected = listOf(
-            NamedItem("Portal Gun", SectionType.ELECTRONIC, BigDecimal.valueOf(2000)))
-
-    calculateQuote(200, bundleSelected, namedItemSelected)
-
-
+    val quoteRequest = QuoteRequest.Builder()
+            .customerName("Ricky Sanchez")
+            .wriskScore(200)
+            .bundleSelected(listOf(SectionType.GENERAL))
+            .namedItemSelected(listOf(
+                    NamedItem("Portal Gun", SectionType.ELECTRONIC, BigDecimal.valueOf(2000)
+                    )))
+            .build()
 }
 
