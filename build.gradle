@@ -1,13 +1,16 @@
 buildscript {
     ext.kotlin_version = '1.2.51'
     ext.spring_boot_version = '1.5.4.RELEASE'
+    ext.junitVersion = "5.0.0"
+    ext.junitPlatformVersion = "1.0.0"
 
     repositories {
         mavenCentral()
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        //classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
+        classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
     }
 }
 
@@ -16,8 +19,9 @@ version '1.0-SNAPSHOT'
 
 apply plugin: 'kotlin' // Required for Kotlin integration
 //apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
+//apply plugin: 'org.springframework.boot'
+//apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.junit.platform.gradle.plugin'
 
 repositories {
     mavenCentral()
@@ -26,9 +30,17 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile project(":policy-contracts")
-    compile 'org.springframework.boot:spring-boot-starter-web'
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    //compile 'org.springframework.boot:spring-boot-starter-web'
+    //testCompile('org.springframework.boot:spring-boot-starter-test')
+
+    testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+    testCompile "org.junit.jupiter:junit-jupiter-params:$junitVersion"
+
+    runtime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
+    runtime "org.junit.platform:junit-platform-console:$junitPlatformVersion"
 }
+
+apply from: "junit5.gradle"
 
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
