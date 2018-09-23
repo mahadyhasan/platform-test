@@ -14,8 +14,11 @@ class QuoteRequest(
 
 
         fun customerName(customerName: String) = apply { this.customerName = customerName }
+
         fun wriskScore(wriskScore: Int) = apply { this.wriskScore = wriskScore }
+
         fun bundleSelected(bundleSelected: List<SectionType>?) = apply { this.bundleSelected = bundleSelected }
+
         fun namedItemSelected(namedItemSelected: List<NamedItem>?) = apply { this.namedItemSelected = namedItemSelected }
 
         fun build() = QuoteRequest(customerName, wriskScore, bundleSelected, namedItemSelected)

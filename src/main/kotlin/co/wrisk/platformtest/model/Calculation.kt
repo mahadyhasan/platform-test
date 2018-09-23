@@ -1,7 +1,24 @@
 package co.wrisk.platformtest.model
 
-open class Calculation(wriskScore: Int)
+import java.math.BigDecimal
 
-class BundleCalculation(wriskScore: Int, listOfSectionTypes: List<SectionType>) : Calculation(wriskScore)
+class Calculation(
+        var wriskScore: Int = 0,
+        var selectedBundles: List<SectionType>? = emptyList(),
+        var selectedNamedItems: List<NamedItem>? = emptyList()) {
 
-class NamedItemCalculation(wriskScore: Int, listOfNamedItems: List<NamedItem>) : Calculation(wriskScore)
+    val priceMatrix = HashMap<SectionType, List<Result>>()
+
+
+
+
+    fun calculatePrice() {
+
+
+    }
+
+
+}
+
+data class Result(val value: BigDecimal, val excessOption: BigDecimal, val result: BigDecimal)
+

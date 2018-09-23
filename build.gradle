@@ -11,6 +11,10 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         //classpath "org.springframework.boot:spring-boot-gradle-plugin:$spring_boot_version"
         classpath "org.junit.platform:junit-platform-gradle-plugin:$junitPlatformVersion"
+
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
+        classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
     }
 }
 
@@ -18,10 +22,10 @@ group 'co.wrisk'
 version '1.0-SNAPSHOT'
 
 apply plugin: 'kotlin' // Required for Kotlin integration
-//apply plugin: "kotlin-spring" // See https://kotlinlang.org/docs/reference/compiler-plugins.html#kotlin-spring-compiler-plugin
-//apply plugin: 'org.springframework.boot'
-//apply plugin: 'io.spring.dependency-management'
 apply plugin: 'org.junit.platform.gradle.plugin'
+apply plugin: 'kotlin-spring'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
 
 repositories {
     mavenCentral()
@@ -30,14 +34,19 @@ repositories {
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile project(":policy-contracts")
-    //compile 'org.springframework.boot:spring-boot-starter-web'
-    //testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('com.fasterxml.jackson.module:jackson-module-kotlin')
+    compile("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    compile("org.jetbrains.kotlin:kotlin-reflect")
 
+    testCompile('org.springframework.boot:spring-boot-starter-test')
     testCompile "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testCompile "org.junit.jupiter:junit-jupiter-params:$junitVersion"
 
     runtime "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
     runtime "org.junit.platform:junit-platform-console:$junitPlatformVersion"
+
+
 }
 
 apply from: "junit5.gradle"
