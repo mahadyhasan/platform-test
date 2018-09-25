@@ -22,7 +22,7 @@ class QuoteGeneratorTest {
                         )))
                 .build()
 
-        val quote = quoteGenerator.calculateQuote(quoteRequest)
+        val quote = quoteGenerator.generateQuote(quoteRequest)
 
         assertNotNull(quote)
 
