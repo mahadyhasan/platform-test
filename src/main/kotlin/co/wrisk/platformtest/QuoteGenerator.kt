@@ -1,10 +1,6 @@
 package co.wrisk.platformtest
 
-import co.wrisk.platformtest.model.BundleOptionType
-import co.wrisk.platformtest.model.NamedItem
-import co.wrisk.platformtest.model.Quote
-import co.wrisk.platformtest.model.QuoteRequest
-import co.wrisk.platformtest.model.SectionType
+import co.wrisk.platformtest.model.*
 import java.math.BigDecimal
 
 class QuoteGenerator {
@@ -41,18 +37,41 @@ class QuoteGenerator {
     private fun generateBundleQuote(wriskScore: Int, bundleSelected: List<BundleOptionType>) {
         bundleSelected.stream()
                 .forEach { bundle ->
-                    bundleQuoteMap.put(bundle, calcCombinations(wriskScore, bundle))
+                    bundleQuoteMap.put(bundle, calcBundleCombinations(wriskScore, bundle))
                 }
 
         println(bundleQuoteMap)
 
     }
 
+
+    private fun generateNamedItemQuote(wriskScore: Int, namedItemSelected: List<NamedItem>) {
+        namedItemSelected.stream()
+                .forEach { t: NamedItem? ->
+                    namedItemQuoteMap.put(t!!.category, calcNamedItemCombinations(wriskScore, t))
+                }
+
+        println(namedItemQuoteMap)
+    }
+
+    private fun calcNamedItemCombinations(wriskScore: Int, t: NamedItem?): List<Quote> {
+        val allQuoteCombinations = mutableListOf<Quote>()
+        if (t != null) {
+            t.category.excessOptions
+                    .map { excessOption ->
+                        allQuoteCombinations.add(Quote(wriskScore, t.value, excessOption, rate, t.category.multiplier))
+                    }
+        }
+
+        return allQuoteCombinations
+    }
+
+
     /**
      * Calculate the combinations of value/excess options
-     * for each bundle types selected
+     * for a bundle type selected
      */
-    private fun calcCombinations(wriskScore: Int, bundle: BundleOptionType): List<Quote> {
+    private fun calcBundleCombinations(wriskScore: Int, bundle: BundleOptionType): List<Quote> {
         val allQuoteCombinations = mutableListOf<Quote>()
         bundle.listOfValueOptions()
                 .map { value ->
@@ -61,9 +80,6 @@ class QuoteGenerator {
                     }
                 }
         return allQuoteCombinations
-    }
-
-    private fun generateNamedItemQuote(wriskScore: Int, namedItemSelected: List<NamedItem>) {
     }
 
 
